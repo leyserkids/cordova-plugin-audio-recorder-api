@@ -1,7 +1,14 @@
 Cordova Audio Recorder API Plugin
 ==============================
 
-[![Join the chat at https://gitter.im/emj365/cordova-plugin-audio-recorder-api](https://badges.gitter.im/emj365/cordova-plugin-audio-recorder-api.svg)](https://gitter.im/emj365/cordova-plugin-audio-recorder-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Notes:
+--------------
+THIS REPO WAS OPTIMIZED FOR LeySerKids, A BRAND OF GRAPECITY INC.
+
+The major enhancements are:
+
+- iOS: The quality of audio output was enhanced to online music level (about 120kbps).
+
 
 Introduction:
 --------------
