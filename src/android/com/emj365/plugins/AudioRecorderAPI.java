@@ -40,7 +40,16 @@ public class AudioRecorderAPI extends CordovaPlugin {
       myRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
       myRecorder.setAudioSamplingRate(44100);
       myRecorder.setAudioChannels(1);
+
+      /** Ning Wei 2018/06/08
+      Enhanced the quality of output file to the online music level (about 110kbps)
       myRecorder.setAudioEncodingBitRate(32000);
+      **/
+
+      myRecorder.setAudioEncodingBitRate(112000);
+
+      /** END **/
+
       myRecorder.setOutputFile(outputFile);
 
       try {
