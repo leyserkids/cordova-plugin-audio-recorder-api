@@ -7,7 +7,7 @@ THIS REPO WAS OPTIMIZED FOR LeySerKids, A BRAND OF GRAPECITY INC.
 
 The major enhancements are:
 
-- You can change the quality of output file by the qlevel arguments of the record method: QUALITY_LEVEL_HIGH for online music (about 128kbps), QUALITY_LEVEL_LOW for voice (about 36kbps). The default value is QUALITY_LEVEL_HIGH.
+- You can change the quality of output file by the bitrate arguments of the record method in kbps, DEFAULT_BIT_RATE_KBPS is 32.
 
 Introduction:
 --------------
@@ -50,7 +50,7 @@ recorder.record = function() {
   }, function(msg) {
     // failed
     alert('ko: ' + msg);
-  }, 30, window.plugins.audioRecorderAPI.QUALITY_LEVEL_LOW); // record 30 seconds, low quality
+  }, 30, 16); // record for 30 seconds, low quality (16kbps)
 }
 recorder.playback = function() {
   window.plugins.audioRecorderAPI.playback(function(msg) {
@@ -97,5 +97,5 @@ window.plugins.audioRecorderAPI.record(function(savedFilePath) {
     });
 }, function(msg) {
   alert('ko: ' + msg);
-}, 3, window.plugins.audioRecorderAPI.QUALITY_LEVEL_LOW);
+}, 3, window.plugins.audioRecorderAPI.DEFAULT_BIT_RATE_KBPS);
 ```

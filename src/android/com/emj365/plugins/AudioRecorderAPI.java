@@ -20,9 +20,8 @@ import java.io.IOException;
 public class AudioRecorderAPI extends CordovaPlugin {
 
   // Ning Wei 20180608
-  // Define qLevel const
-  private static final int  QUALITY_LEVEL_HIGH = 0;
-  private static final int  QUALITY_LEVEL_LOW = 100;
+  // Define default value of bitrate 
+  private static final int  DEFAULT_BIT_RATE_KBPS = 32;
   // END
 
   private MediaRecorder myRecorder;
@@ -33,7 +32,7 @@ public class AudioRecorderAPI extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     Context context = cordova.getActivity().getApplicationContext();
     Integer seconds;
-    Integer qlevel;
+    Integer bitrate = DEFAULT_BIT_RATE_KBPS * 1024;
 
     if (args.length() >= 1) {
       seconds = args.getInt(0);
@@ -44,10 +43,8 @@ public class AudioRecorderAPI extends CordovaPlugin {
     // Ning Wei 20180608
     // Load qLevel from args[1]
     if (args.length() >= 2) {
-      qlevel = args.getInt(1);
-    } else {
-      qlevel = QUALITY_LEVEL_HIGH;
-    }
+      bitrate = args.getInt(1) * 1024;
+    } 
     //END
 
     if (action.equals("record")) {
@@ -61,20 +58,10 @@ public class AudioRecorderAPI extends CordovaPlugin {
       myRecorder.setAudioChannels(1);
 
       // Ning Wei 20180608
-      // Adapt different bit rate for qLevels
-      if (qlevel == QUALITY_LEVEL_LOW){
+      // Apply bit rate
+      myRecorder.setAudioEncodingBitRate(bitrate);
 
-        myRecorder.setAudioEncodingBitRate(32000);
-
-        LOG.i("AudioRecorderAPI","AudioEncodingBitRate set to 32k for QUALITY_LEVEL_LOW");
-
-      }else{
-
-        myRecorder.setAudioEncodingBitRate(118000);
-
-        LOG.i("AudioRecorderAPI","AudioEncodingBitRate set to 118k for QUALITY_LEVEL_HIGH (default)");
-
-      }
+      LOG.i("AudioRecorderAPI","AudioEncodingBitRate set to " + bitrate +"bps");
       // END
 
       myRecorder.setOutputFile(outputFile);

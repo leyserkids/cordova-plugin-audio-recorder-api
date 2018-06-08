@@ -2,9 +2,8 @@ function AudioRecorderAPI() {
 }
 
 // Ning Wei 20180608
-// Define qLevel const
-AudioRecorderAPI.prototype.QUALITY_LEVEL_HIGH = 0;
-AudioRecorderAPI.prototype.QUALITY_LEVEL_LOW = 100;
+// Define default bit rate: 32kbps
+AudioRecorderAPI.prototype.DEFAULT_BIT_RATE_KBPS = 32;
 // END
 
 // Ning Wei 20180608
@@ -13,15 +12,15 @@ AudioRecorderAPI.prototype.DEFAULT_DURATION_SECONDS = 7;
 // END
 
 
-AudioRecorderAPI.prototype.record = function (successCallback, errorCallback, duration, qLevel) {
+AudioRecorderAPI.prototype.record = function (successCallback, errorCallback, duration, bitrate) {
 	
 	// Ning Wei 20180608
-	// Provide default value for both duration and qlevel
+	// Provide default value for both duration and bitrate
 	var d = duration ? duration : DEFAULT_DURATION_SECONDS;
-	var q = qLevel ? qLevel : QUALITY_LEVEL_HIGH;
+	var b = bitrate ? bitrate : DEFAULT_BIT_RATE_KBPS;
 	// END
 
-  	cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "record", [d,q]);
+  	cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "record", [d,b]);
 };
 
 AudioRecorderAPI.prototype.stop = function (successCallback, errorCallback) {
