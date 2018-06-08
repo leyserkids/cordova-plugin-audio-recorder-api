@@ -7,9 +7,7 @@ THIS REPO WAS OPTIMIZED FOR LeySerKids, A BRAND OF GRAPECITY INC.
 
 The major enhancements are:
 
-- iOS: The quality of audio output was enhanced to online music level (about 120kbps).
-- Adnroid: The quality of audio output was enhanced to online music level (about 120kbps).
-
+- You can change the quality of output file by the qlevel arguments of the record method: QUALITY_LEVEL_HIGH for online music (about 128kbps), QUALITY_LEVEL_LOW for voice (about 36kbps). The default value is QUALITY_LEVEL_HIGH.
 
 Introduction:
 --------------
@@ -52,7 +50,7 @@ recorder.record = function() {
   }, function(msg) {
     // failed
     alert('ko: ' + msg);
-  }, 30); // record 30 seconds
+  }, 30, window.plugins.audioRecorderAPI.QUALITY_LEVEL_LOW); // record 30 seconds, low quality
 }
 recorder.playback = function() {
   window.plugins.audioRecorderAPI.playback(function(msg) {
@@ -99,5 +97,5 @@ window.plugins.audioRecorderAPI.record(function(savedFilePath) {
     });
 }, function(msg) {
   alert('ko: ' + msg);
-}, 3);
+}, 3, window.plugins.audioRecorderAPI.QUALITY_LEVEL_LOW);
 ```
