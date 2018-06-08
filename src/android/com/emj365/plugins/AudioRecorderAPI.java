@@ -19,11 +19,6 @@ import java.io.IOException;
 
 public class AudioRecorderAPI extends CordovaPlugin {
 
-  // Ning Wei 20180608
-  // Define default value of bitrate 
-  private static final int  DEFAULT_BIT_RATE_KBPS = 32;
-  // END
-
   private MediaRecorder myRecorder;
   private String outputFile;
   private CountDownTimer countDowntimer;
@@ -32,7 +27,6 @@ public class AudioRecorderAPI extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     Context context = cordova.getActivity().getApplicationContext();
     Integer seconds;
-    Integer bitrate = DEFAULT_BIT_RATE_KBPS * 1024;
 
     if (args.length() >= 1) {
       seconds = args.getInt(0);
@@ -41,15 +35,16 @@ public class AudioRecorderAPI extends CordovaPlugin {
     }
 
     // Ning Wei 20180608
-    // Load qLevel from args[1]
+    // Load bitrate from args[1]
+    Integer bitrate = 32 * 1024; // Default is 32kbps
     if (args.length() >= 2) {
       bitrate = args.getInt(1) * 1024;
-    } 
+    }
     //END
 
     if (action.equals("record")) {
       outputFile = context.getFilesDir().getAbsoluteFile() + "/"
-        + UUID.randomUUID().toString() + ".m4a";
+              + UUID.randomUUID().toString() + ".m4a";
       myRecorder = new MediaRecorder();
       myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
       myRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
