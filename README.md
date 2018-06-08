@@ -8,6 +8,7 @@ THIS REPO WAS OPTIMIZED FOR LeySerKids, A BRAND OF GRAPECITY INC.
 The major enhancements are:
 
 - iOS: The quality of audio output was enhanced to online music level (about 120kbps).
+- Adnroid: The quality of audio output was enhanced to online music level (about 120kbps).
 
 
 Introduction:
