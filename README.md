@@ -8,6 +8,7 @@ THIS REPO WAS OPTIMIZED FOR LeySerKids, A BRAND OF GRAPECITY INC.
 The major enhancements are:
 
 - You can change the quality of output file by the bitrate arguments of the record method in kbps, DEFAULT_BIT_RATE_KBPS is 32.
+- You can check the permission of accessing microphone by checkPermission
 
 Introduction:
 --------------
@@ -26,7 +27,7 @@ Install:
 ---------
 
 ```bash
-$ cordova plugin add cordova-plugin-audio-recorder-api
+$ cordova plugin add https://github.com/leyserkids/cordova-plugin-audio-recorder-api.git
 ```
 
 How to use:
@@ -34,6 +35,19 @@ How to use:
 
 ```javascript
 var recorder = new Object;
+recorder.checkPermission = function() {
+  window.plugins.audioRecorderAPI.checkPermission(function(isGranted) {
+    // success
+	if(isGranted){
+		alert('permission granted');
+	}else{
+		alert('permission denied or unditermined.');
+	}
+  }, function(msg) {
+    // failed
+    alert('ko: ' + msg);
+  });
+}
 recorder.stop = function() {
   window.plugins.audioRecorderAPI.stop(function(msg) {
     // success

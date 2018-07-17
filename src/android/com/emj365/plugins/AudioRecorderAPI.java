@@ -6,12 +6,17 @@ import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+
 import java.util.UUID;
 import java.io.FileInputStream;
 import java.io.File;
@@ -41,6 +46,23 @@ public class AudioRecorderAPI extends CordovaPlugin {
       bitrate = args.getInt(1) * 1024;
     }
     //END
+
+
+    // Ning Wei 20180717
+    // Check permission
+    if (action.equals("checkPermission")) {
+
+      boolean isGranted = true;
+
+      // Targeting M and newer
+      if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        isGranted = ContextCompat.checkSelfPermission(cordova.getActivity(),
+                android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+      }
+
+      callbackContext.success(isGranted?1:0);
+    }
+    // END
 
     if (action.equals("record")) {
       outputFile = context.getFilesDir().getAbsoluteFile() + "/"

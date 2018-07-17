@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-audio-recorder-api.AudioRecorderAPI", function(require, exports, module) {
 
 function AudioRecorderAPI() {
 }
@@ -16,6 +17,13 @@ AudioRecorderAPI.prototype.record = function (successCallback, errorCallback, du
 AudioRecorderAPI.prototype.stop = function (successCallback, errorCallback) {
   cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "stop", []);
 };
+               
+// Ning Wei 20180717
+// New function for checking permission
+AudioRecorderAPI.prototype.checkPermission = function (successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "checkPermission", []);
+};
+// END
 
 AudioRecorderAPI.prototype.playback = function (successCallback, errorCallback) {
   cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "playback", []);
@@ -30,3 +38,4 @@ AudioRecorderAPI.install = function () {
 };
 
 cordova.addConstructor(AudioRecorderAPI.install);
+});

@@ -5,6 +5,21 @@
 
 #define RECORDINGS_FOLDER [NSHomeDirectory() stringByAppendingPathComponent:@"Library/NoCloud"]
 
+- (void)checkPermission:(CDVInvokedUrlCommand*)command {
+    
+    // Ning Wei 20180717
+    // Check permission of accessing microphone
+    CDVPluginResult* pluginResult = nil;
+   
+    BOOL granted =  [AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionGranted;
+    
+    pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsBool:granted];
+    
+    [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
+    
+    // END
+}
+
 - (void)record:(CDVInvokedUrlCommand*)command {
   _command = command;
   
