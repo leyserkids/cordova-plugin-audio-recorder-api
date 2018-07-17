@@ -36,9 +36,9 @@ How to use:
 ```javascript
 var recorder = new Object;
 recorder.checkPermission = function() {
-  window.plugins.audioRecorderAPI.checkPermission(function(isGranted) {
+  window.plugins.audioRecorderAPI.checkPermission(function(result) {
     // success
-	if(isGranted){
+	if(result === window.plugins.audioRecorderAPI.PERMISSION_GRANTED){
 		alert('permission granted');
 	}else{
 		alert('permission denied or unditermined.');

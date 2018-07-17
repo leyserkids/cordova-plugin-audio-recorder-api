@@ -10,10 +10,18 @@
     // Ning Wei 20180717
     // Check permission of accessing microphone
     CDVPluginResult* pluginResult = nil;
+	int checkReseult = 1000; // Defualt is GRANTED
+	
    
-    BOOL granted =  [AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionGranted;
+    if([AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionDenied){
+    	checkReseult = 1001;
+    }
+	
+    if([AVAudioSession sharedInstance].recordPermission == AVAudioSessionRecordPermissionUndetermined){
+    	checkReseult = 1002;
+    }
     
-    pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsBool:granted];
+    pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsInt:checkReseult];
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
     

@@ -52,15 +52,17 @@ public class AudioRecorderAPI extends CordovaPlugin {
     // Check permission
     if (action.equals("checkPermission")) {
 
-      boolean isGranted = true;
-
+	  int resultCode = 1000; // Default is GRANTED
+	  
       // Targeting M and newer
       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-        isGranted = ContextCompat.checkSelfPermission(cordova.getActivity(),
-                android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+        if(ContextCompat.checkSelfPermission(cordova.getActivity(),
+                android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED){
+                	resultCode = 1001;
+                }
       }
 
-      callbackContext.success(isGranted?1:0);
+      callbackContext.success(resultCode);
     }
     // END
 

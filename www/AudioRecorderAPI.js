@@ -20,6 +20,10 @@ AudioRecorderAPI.prototype.stop = function (successCallback, errorCallback) {
                
 // Ning Wei 20180717
 // New function for checking permission
+AudioRecorderAPI.prototype.PERMISSION_GRANTED = 1000;
+AudioRecorderAPI.prototype.PERMISSION_DENIED = 1001;
+AudioRecorderAPI.prototype.PERMISSION_UNDETERMIN = 1002;
+
 AudioRecorderAPI.prototype.checkPermission = function (successCallback, errorCallback) {
   cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "checkPermission", []);
 };
