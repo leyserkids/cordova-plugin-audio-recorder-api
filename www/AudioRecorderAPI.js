@@ -1,5 +1,3 @@
-cordova.define("cordova-plugin-audio-recorder-api.AudioRecorderAPI", function(require, exports, module) {
-
 function AudioRecorderAPI() {
 }
 
@@ -42,4 +40,3 @@ AudioRecorderAPI.install = function () {
 };
 
 cordova.addConstructor(AudioRecorderAPI.install);
-});
