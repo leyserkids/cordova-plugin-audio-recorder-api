@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.2",
   "name": "cordova-plugin-audio-recorder-api",
   "cordova_name": "AudioRecorderAPI",
   "description": "This plugin is a Cordova audio recorder plugin which works as API forked by LeySerKids a brand of GrapeCity inc.",

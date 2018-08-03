@@ -107,10 +107,23 @@
 }
 
 - (void)stop:(CDVInvokedUrlCommand*)command {
-  _command = command;
-  NSLog(@"stopRecording");
-  [recorder stop];
-  NSLog(@"stopped");
+	_command = command;
+    
+	// Ning Wei 20180803
+	// 先判断是否处于录制状态
+	if(recorder && recorder.isRecording){
+        
+	    NSLog(@"stopRecording");
+        
+	    [recorder stop];
+        
+	    NSLog(@"stopped");
+        
+	}else{
+	    NSLog(@"already stopped");
+	}
+    
+	// END
 }
 
 - (void)playback:(CDVInvokedUrlCommand*)command {
