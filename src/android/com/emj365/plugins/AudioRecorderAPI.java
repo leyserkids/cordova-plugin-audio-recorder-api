@@ -8,14 +8,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.content.pm.PackageManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import java.util.UUID;
 import java.io.FileInputStream;
@@ -31,22 +34,57 @@ public class AudioRecorderAPI extends CordovaPlugin {
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     Context context = cordova.getActivity().getApplicationContext();
-    Integer seconds;
 
-    if (args.length() >= 1) {
-      seconds = args.getInt(0);
-    } else {
-      seconds = 7;
+
+    // Ning Wei 20180903
+    // Retrieve duration
+    if (action.equals("getDuration")) {
+
+      try{
+
+        String filePath;
+        Integer durationInSecs;
+
+        // 先判断入口参数
+        if (args.length() >= 1) {
+
+          filePath = args.getString(0);
+
+          // 使用MediaMetadataRetriever获取音频时长，这个方法速度快，要求API>=10
+          String mediaPath = Uri.parse(filePath).getPath();
+          MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+          mmr.setDataSource(mediaPath);
+
+          // 获取时长数据，单位是毫秒
+          String durationMsStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+
+          // 释放资源
+          mmr.release();
+
+          // 格式转换到秒
+          durationInSecs = Integer.parseInt(durationMsStr)/1000;
+
+          // 成功的回调
+          callbackContext.success(durationInSecs);
+
+        } else {
+
+          // 参数为空时，记录日志并回调
+          Log.e("AudioRecorderAPI","filePath is null");
+          callbackContext.error("ARGUMENT IS NULL OR EMPTY: filePath");
+        }
+
+      }catch(Exception e){
+
+        // 异常时，记录日志并回调
+        Log.e("AudioRecorderAPI","Exception in getDuration: \r\n"+ e.toString());
+
+        callbackContext.error(e.getMessage());
+      }
+
+
     }
-
-    // Ning Wei 20180608
-    // Load bitrate from args[1]
-    Integer bitrate = 32 * 1024; // Default is 32kbps
-    if (args.length() >= 2) {
-      bitrate = args.getInt(1) * 1024;
-    }
-    //END
-
+    // END
 
     // Ning Wei 20180717
     // Check permission
@@ -67,6 +105,23 @@ public class AudioRecorderAPI extends CordovaPlugin {
     // END
 
     if (action.equals("record")) {
+
+      // Ning Wei 20180608
+      // Load bitrate from args[1]
+      Integer seconds;
+
+      if (args.length() >= 1) {
+        seconds = args.getInt(0);
+      } else {
+        seconds = 7;
+      }
+
+      Integer bitrate = 32 * 1024; // Default is 32kbps
+      if (args.length() >= 2) {
+        bitrate = args.getInt(1) * 1024;
+      }
+      //END
+
       outputFile = context.getFilesDir().getAbsoluteFile() + "/"
               + UUID.randomUUID().toString() + ".m4a";
       myRecorder = new MediaRecorder();

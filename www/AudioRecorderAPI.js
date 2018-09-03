@@ -27,6 +27,13 @@ AudioRecorderAPI.prototype.checkPermission = function (successCallback, errorCal
 };
 // END
 
+// Ning Wei 20180903
+// New function for retrieving duration
+AudioRecorderAPI.prototype.getDuration = function (filePath, successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "getDuration", [filePath]);
+};
+// END
+
 AudioRecorderAPI.prototype.playback = function (successCallback, errorCallback) {
   cordova.exec(successCallback, errorCallback, "AudioRecorderAPI", "playback", []);
 };
