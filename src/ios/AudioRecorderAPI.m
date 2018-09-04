@@ -25,7 +25,7 @@
         
         NSLog(@"[AudioRecorderAPI] getDuration failed: %@", exception);
         
-        pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString:(NSString*)exception];
+        pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString: exception.reason];
         
         [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
     }
