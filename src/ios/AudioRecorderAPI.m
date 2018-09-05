@@ -11,13 +11,20 @@
     // Retrieving duration of an audio file
     @try {
         
+        // 从参数中获取文件路径
         NSString* filePath = [command argumentAtIndex:0];
         
+        // 构建元数据读取，重要提示：必须使用fileURLWithPath生成URLAssetWithURL参数，否则会导致文件信息读取出错
         AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:filePath] options:nil];
-        CMTime audioDuration = audioAsset.duration;
-        int audioDurationSeconds = (int) CMTimeGetSeconds(audioDuration);
         
-        pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsInt:audioDurationSeconds];
+        // 获取时长
+        CMTime audioDuration = audioAsset.duration;
+        
+        // 默认的单位是秒，但是类型为Float64，转换时需要注意
+        int audioDurationMs = (int) (CMTimeGetSeconds(audioDuration) * 1000);
+        
+        // 生成返回的参数，回调的第一个参数是时长（毫秒）
+        pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsInt:audioDurationMs];
         
         [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];
     }
@@ -25,6 +32,7 @@
         
         NSLog(@"[AudioRecorderAPI] getDuration failed: %@", exception);
         
+        // 生成异常用的返回参数，回调第一个参数是异常的简单信息，因为调用的是系统API，使用reason就可以。
         pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_ERROR messageAsString: exception.reason];
         
         [self.commandDelegate sendPluginResult:pluginResult callbackId: command.callbackId];

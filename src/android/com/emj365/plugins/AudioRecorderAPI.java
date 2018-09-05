@@ -43,7 +43,7 @@ public class AudioRecorderAPI extends CordovaPlugin {
       try{
 
         String filePath;
-        Integer durationInSecs;
+        Integer durationInMs;
 
         // 先判断入口参数
         if (args.length() >= 1) {
@@ -61,11 +61,11 @@ public class AudioRecorderAPI extends CordovaPlugin {
           // 释放资源
           mmr.release();
 
-          // 格式转换到秒
-          durationInSecs = Integer.parseInt(durationMsStr)/1000;
+          // 格式转换
+          durationInMs = Integer.parseInt(durationMsStr);
 
           // 成功的回调
-          callbackContext.success(durationInSecs);
+          callbackContext.success(durationInMs);
 
         } else {
 

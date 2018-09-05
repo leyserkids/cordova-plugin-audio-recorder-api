@@ -9,7 +9,7 @@ The major enhancements are:
 
 - You can change the quality of output file by the bitrate arguments of the record method in kbps, DEFAULT_BIT_RATE_KBPS is 32.
 - You can check the permission of accessing microphone by checkPermission
-- You can retrieve the duration of an audio file by getDuration
+- You can retrieve the duration of an audio file by getDuration in ms
 
 Introduction:
 --------------
@@ -79,7 +79,7 @@ recorder.playback = function() {
 recorder.getDuration = function(filePath) {
   window.plugins.audioRecorderAPI.getDuration(filePath,function(durationInSecs) {
     // ok
-    alert('ok: Duration is ' + durationInSecs + 'sec');
+    alert('ok: Duration is ' + durationInSecs/1000 + 'sec');
   }, function(msg) {
     // failed
     alert('ko: ' + msg);
